@@ -26,7 +26,15 @@
       <h1>Casa dei Narcisi</h1>
       <p>Loft moderno a Milano in zona Paolo Sarpi. Un rifugio elegante e funzionale per i tuoi soggiorni business o leisure.</p>
       <p><strong>Prenota direttamente dal sito ufficiale.</strong></p>
-      <a class="btn" href="INSERISCI_LINK_BOOKING_ENGINE_SMOOBU" target="_blank">PRENOTA ORA</a>
+	  <div id="apartmentIframeAll" style="margin-top:20px;"></div>
+		<script src="https://login.smoobu.com/js/Settings/BookingToolIframe.js"></script>
+		<script>
+		  BookingToolIframe.initialize({
+			url: "https://login.smoobu.com/en/booking-tool/iframe/1147778",
+			baseUrl: "https://login.smoobu.com",
+			target: "#apartmentIframeAll"
+		  });
+		</script>
     </div>
     <div class="card">
       <img src="images/hero.jpg" alt="Casa dei Narcisi">
