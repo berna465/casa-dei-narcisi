@@ -54,8 +54,9 @@
       gap:12px;
       margin-bottom:14px;
     }
-    .brand{ font-weight:800; letter-spacing:.2px; }
-    .navlinks{ display:flex; gap:14px; flex-wrap:wrap; }
+    .brand{ font-weight:800; letter-spacing:.2px; display:flex; gap:10px; align-items:center; }
+    .navlinks{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+
     .navlinks a{
       text-decoration:none;
       color:var(--muted);
@@ -66,6 +67,28 @@
       background:rgba(255,255,255,.02);
     }
     .navlinks a:hover{ color:var(--txt); border-color:rgba(255,255,255,.12); }
+
+    .langpick{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      font-weight:700;
+    }
+    .langpick select{
+      appearance:none;
+      border:0;
+      outline:none;
+      background:transparent;
+      color:var(--txt);
+      font-weight:800;
+      cursor:pointer;
+    }
+    .langpick option{ color:#111; }
 
     /* Hero */
     .hero{
@@ -87,6 +110,7 @@
       text-decoration:none;
       font-weight:800;
       border:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
     }
     .btn.primary{ background:var(--acc); color:#041014; border-color:transparent; }
     .btn.ghost{ background:transparent; color:var(--txt); border-color:rgba(255,255,255,.14); }
@@ -140,6 +164,24 @@
     .thumb:hover img{ transform:scale(1.03); }
     .thumb:focus-visible{ outline:2px solid var(--acc2); outline-offset:2px; }
 
+    /* Host section */
+    .host-section{
+      padding:22px;
+      border-radius:var(--r);
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+    }
+    .host-section .accent{
+      display:inline-block;
+      width:42px;
+      height:3px;
+      background:#cfa85a;
+      border-radius:99px;
+      margin:8px 0 12px;
+      opacity:.9;
+    }
+
     /* Booking wrapper */
     .booking-shell{
       padding:18px;
@@ -147,20 +189,6 @@
       background:var(--card);
       box-shadow:var(--shadow);
       border:1px solid rgba(255,255,255,.04);
-    }
-    #apartmentIframeAll{
-      border-radius:12px;
-      overflow:hidden;
-      background:#0b0e1a;
-      min-height:520px; /* anti-jump */
-      border:1px solid rgba(255,255,255,.06);
-    }
-    #apartmentIframeAll iframe{
-      width:100% !important;
-      height:520px !important;
-      border:0 !important;
-      display:block;
-      border-radius:12px;
     }
 
     /* Contact form */
@@ -185,8 +213,9 @@
     }
     textarea{ min-height:130px; resize:vertical; }
     input::placeholder, textarea::placeholder{ color:var(--muted); }
-
     .hint{ font-size:12px; color:var(--muted); }
+    .ok{ color:#b7f7d2; font-weight:800; }
+    .err{ color:#ffb4b4; font-weight:800; }
 
     /* Lightbox */
     .lb{
@@ -293,13 +322,12 @@
       .sticky{ position:static; }
       h1{ font-size:32px; }
       .grid{ grid-template-columns:1fr 1fr; }
-      #apartmentIframeAll{ min-height:620px; }
-      #apartmentIframeAll iframe{ height:620px !important; }
       .row2{ grid-template-columns:1fr; }
     }
     @media(max-width: 560px){
       .grid{ grid-template-columns:1fr; }
       .nav{ flex-direction:column; align-items:flex-start; }
+      .navlinks{ width:100%; }
     }
   </style>
 </head>
@@ -307,25 +335,47 @@
 <body>
   <div class="wrap">
     <div class="nav">
-      <div class="brand">Casa dei Narcisi</div>
+      <div class="brand">
+        <span>Casa dei Narcisi</span>
+
+        <div class="langpick" title="Language">
+          <span data-i18n="lang.label">Lingua</span>
+          <select id="langSelect" aria-label="Language selector">
+            <option value="it">IT</option>
+            <option value="en">EN</option>
+            <option value="fr">FR</option>
+            <option value="de">DE</option>
+            <option value="es">ES</option>
+          </select>
+        </div>
+      </div>
+
       <div class="navlinks">
-        <a href="#servizi">Servizi</a>
-        <a href="#foto">Foto</a>
-        <a href="#posizione">Posizione</a>
-        <a href="#contatti">Contatti</a>
-        <a href="#prenota">Prenota</a>
+        <a href="#servizi" data-i18n="nav.services">Servizi</a>
+        <a href="#foto" data-i18n="nav.photos">Foto</a>
+        <a href="#posizione" data-i18n="nav.location">Posizione</a>
+        <a href="#contatti" data-i18n="nav.contact">Contatti</a>
+        <a href="#prenota" data-i18n="nav.book">Prenota</a>
       </div>
     </div>
 
     <div class="hero">
       <div class="card">
-        <h1>Loft moderno a Milano<br><span class="muted">zona Paolo Sarpi</span></h1>
-        <p class="muted">Un rifugio curato e funzionale in Chinatown: perfetto per soggiorni business o leisure, e comodissimo per eventi in città.</p>
+        <h1>
+          <span data-i18n="hero.title">Loft moderno a Milano</span><br>
+          <span class="muted" data-i18n="hero.subtitle">zona Paolo Sarpi</span>
+        </h1>
+
+        <p class="muted" data-i18n="hero.lead">
+          Un rifugio curato e funzionale in Chinatown: perfetto per soggiorni business o leisure, e comodissimo per eventi in città.
+        </p>
+
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-          <a class="btn primary" href="#prenota">Verifica disponibilità</a>
-          <a class="btn ghost" href="#contatti">Scrivici</a>
+          <a class="btn primary" href="#prenota" data-i18n="cta.availability">Verifica disponibilità</a>
+          <a class="btn ghost" href="#contatti" data-i18n="cta.contact">Scrivici</a>
         </div>
-        <p class="muted" style="margin-top:10px; font-size:13px;">
+
+        <p class="muted" style="margin-top:10px; font-size:13px;" data-i18n="hero.note">
           Prenotazione diretta dal sito ufficiale.
         </p>
       </div>
@@ -339,28 +389,29 @@
       <!-- LEFT COLUMN -->
       <div>
         <div class="card section" id="servizi">
-          <h2>Servizi</h2>
-          <p class="muted">Essenziale, pulito, comodo. Tutto quello che serve per vivere Milano bene.</p>
+          <h2 data-i18n="services.title">Servizi</h2>
+          <p class="muted" data-i18n="services.lead">Essenziale, pulito, comodo. Tutto quello che serve per vivere Milano bene.</p>
+
           <ul class="muted">
-            <li><strong>Wi-Fi</strong> veloce</li>
-            <li><strong>Cucina</strong> attrezzata</li>
-            <li><strong>Biancheria</strong> e asciugamani inclusi</li>
-            <li><strong>Self check-in</strong> (quando disponibile)</li>
-            <li><strong>Zona servita</strong>: ristoranti, market e servizi in Paolo Sarpi</li>
-            <li><strong>Ideale per eventi</strong> e soggiorni business/leisure</li>
+            <li><strong data-i18n="services.wifiStrong">Wi-Fi</strong> <span data-i18n="services.wifi">veloce</span></li>
+            <li><strong data-i18n="services.kitchenStrong">Cucina</strong> <span data-i18n="services.kitchen">attrezzata</span></li>
+            <li><strong data-i18n="services.linenStrong">Biancheria</strong> <span data-i18n="services.linen">e asciugamani inclusi</span></li>
+            <li><strong data-i18n="services.selfcheckStrong">Self check-in</strong> <span data-i18n="services.selfcheck">(quando disponibile)</span></li>
+            <li><strong data-i18n="services.areaStrong">Zona servita</strong>: <span data-i18n="services.area">ristoranti, market e servizi in Paolo Sarpi</span></li>
+            <li><strong data-i18n="services.eventsStrong">Ideale per eventi</strong> <span data-i18n="services.events">e soggiorni business/leisure</span></li>
           </ul>
 
-          <h3 style="margin-top:18px;">Regole essenziali</h3>
+          <h3 style="margin-top:18px;" data-i18n="rules.title">Regole essenziali</h3>
           <ul class="muted">
-            <li>Niente feste / eventi</li>
-            <li>Rispetto del vicinato</li>
-            <li>Orari e capienza come da prenotazione</li>
+            <li data-i18n="rules.noParties">Niente feste / eventi</li>
+            <li data-i18n="rules.neighbors">Rispetto del vicinato</li>
+            <li data-i18n="rules.capacity">Orari e capienza come da prenotazione</li>
           </ul>
         </div>
 
         <div class="card section" id="foto">
-          <h2>Foto</h2>
-          <p class="muted">Clicca su una foto per ingrandire e navigare.</p>
+          <h2 data-i18n="photos.title">Foto</h2>
+          <p class="muted" data-i18n="photos.lead">Clicca su una foto per ingrandire e navigare.</p>
 
           <div class="grid" id="gallery">
             <div class="thumb" tabindex="0" data-full="images/foto1.jpg" data-alt="Foto 1"><img src="images/foto1.jpg" alt="Foto 1"></div>
@@ -369,35 +420,54 @@
             <div class="thumb" tabindex="0" data-full="images/foto4.jpg" data-alt="Foto 4"><img src="images/foto4.jpg" alt="Foto 4"></div>
             <div class="thumb" tabindex="0" data-full="images/foto5.jpg" data-alt="Foto 5"><img src="images/foto5.jpg" alt="Foto 5"></div>
             <div class="thumb" tabindex="0" data-full="images/foto6.jpg" data-alt="Foto 6"><img src="images/foto6.jpg" alt="Foto 6"></div>
+			<div class="thumb" tabindex="0" data-full="images/foto6.jpg" data-alt="Foto 7"><img src="images/foto7.jpg" alt="Foto 7"></div>
+			<div class="thumb" tabindex="0" data-full="images/foto6.jpg" data-alt="Foto 8"><img src="images/foto8.jpg" alt="Foto 8"></div>
+			<div class="thumb" tabindex="0" data-full="images/foto6.jpg" data-alt="Foto 9"><img src="images/foto9.jpg" alt="Foto 9"></div>
           </div>
         </div>
 
         <div class="card section" id="posizione">
-          <h2>Posizione</h2>
-          <p class="muted">Milano — zona Paolo Sarpi (Chinatown). L’indirizzo completo e le istruzioni di check-in vengono condivisi dopo la conferma.</p>
-          <p class="muted" style="margin-bottom:0;">
-            Suggerimento: puoi inserire qui un link a Google Maps oppure un embed in futuro.
+          <h2 data-i18n="location.title">Posizione</h2>
+          <p class="muted" data-i18n="location.text">
+            Milano — zona Paolo Sarpi (Chinatown). L’indirizzo completo e le istruzioni di check-in vengono condivisi dopo la conferma.
+          </p>
+          <p class="muted" style="margin-bottom:0;" data-i18n="location.hint">
+            (In futuro puoi inserire qui un link a Google Maps o un embed.)
           </p>
         </div>
 
-        <div class="card section" id="contatti">
-          <h2>Contatti</h2>
-          <p class="muted">Scrivici un messaggio: ti rispondiamo appena possibile.</p>
+        <!-- HOST / BIO -->
+        <div class="host-section section" id="host">
+          <h2 data-i18n="host.title">Chi vi accoglie</h2>
+          <span class="accent" aria-hidden="true"></span>
+          <p class="muted" data-i18n="host.text">
+            Siamo una coppia milanese di mezza età, legata a questa città e al suo modo discreto di accogliere.
+            Da alcuni anni ci prendiamo cura personalmente di Casa dei Narcisi, un piccolo loft nel quartiere Chinatown,
+            ristrutturato con attenzione ai dettagli e al comfort quotidiano.
+            Crediamo in un’ospitalità semplice e autentica: essere presenti quando serve, lasciare spazio quando non serve,
+            e far sentire ogni ospite a proprio agio, come a casa propria.
+          </p>
+        </div>
 
-          <!-- FORM (mailto) -->
+        <!-- CONTACT -->
+        <div class="card section" id="contatti">
+          <h2 data-i18n="contact.title">Contatti</h2>
+          <p class="muted" data-i18n="contact.lead">Scrivici un messaggio: ti rispondiamo appena possibile.</p>
+
           <form class="form" id="contactForm">
             <div class="row2">
-              <input type="text" id="name" placeholder="Nome" required>
-              <input type="email" id="email" placeholder="Email" required>
+              <input type="text" name="name" id="name" placeholder="Nome" required data-i18n-placeholder="contact.name">
+              <input type="email" name="email" id="email" placeholder="Email" required data-i18n-placeholder="contact.email">
             </div>
-            <input type="text" id="subject" placeholder="Oggetto (es. Richiesta info)" required>
-            <textarea id="message" placeholder="Messaggio" required></textarea>
 
-            <!-- TODO: cambia questa email -->
-            <input type="hidden" id="toEmail" value="INSERISCI_LA_TUA_EMAIL@DOMINIO.IT">
+            <input type="text" name="subject" id="subject" placeholder="Oggetto (es. Richiesta info)" required data-i18n-placeholder="contact.subject">
+            <textarea name="message" id="message" placeholder="Messaggio" required data-i18n-placeholder="contact.message"></textarea>
 
-            <button class="btn primary" type="submit" style="border:0; cursor:pointer;">Invia messaggio</button>
-            <div class="hint">Nota: l’invio apre il tuo client email (Gmail/Outlook). Se vuoi un invio “automatico” senza client, serve un servizio form (te lo preparo quando vuoi).</div>
+            <button class="btn primary" type="submit" style="border:0;" data-i18n="contact.send">Invia messaggio</button>
+            <div class="hint" data-i18n="contact.hint">
+              Non pubblichiamo l’email: il messaggio viene inviato in modo riservato.
+            </div>
+            <div id="contactResult" class="hint" aria-live="polite"></div>
           </form>
         </div>
       </div>
@@ -405,18 +475,12 @@
       <!-- RIGHT COLUMN: BOOKING -->
       <div class="sticky" id="prenota">
         <div class="booking-shell">
-          <h3>Prenota ora</h3>
-          <p class="muted">Seleziona date e ospiti. I risultati si aprono in una nuova scheda.</p>
+          <h3 data-i18n="booking.title">Prenota ora</h3>
+          <p class="muted" data-i18n="booking.lead">Seleziona date e ospiti. I risultati si aprono in una nuova scheda.</p>
 
-          
-			<div id="apartmentIframe2582848">
-			<script type="text/javascript" src="https://login.smoobu.com/js/Settings/BookingToolIframe.js"></script>
-			<script>BookingToolIframe.initialize({"url": "https://login.smoobu.com/en/booking-tool/iframe/1147778/2582848?newTabAfterSearch=true", "baseUrl": "https://login.smoobu.com", "target": "#apartmentIframe2582848"})</script>
-			</div>
+          <div id="apartmentIframe2582848"></div>
 
-		  
-
-          <p class="hint" style="margin-top:10px;">
+          <p class="hint" style="margin-top:10px;" data-i18n="booking.note">
             Prezzi e disponibilità aggiornati in tempo reale.
           </p>
         </div>
@@ -453,53 +517,264 @@
       <div class="mini">
         <span>© <span id="y"></span> Casa dei Narcisi</span>
         <span>•</span>
-        <a href="#contatti" style="text-decoration:none; color:var(--acc2); font-weight:750;">Contatti</a>
+        <a href="#contatti" style="text-decoration:none; color:var(--acc2); font-weight:750;" data-i18n="footer.contact">Contatti</a>
         <span>•</span>
-        <a href="#prenota" style="text-decoration:none; color:var(--acc2); font-weight:750;">Prenota</a>
+        <a href="#prenota" style="text-decoration:none; color:var(--acc2); font-weight:750;" data-i18n="footer.book">Prenota</a>
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a class="btn ghost" href="#contatti">Scrivi</a>
-        <a class="btn primary" href="#prenota">Verifica disponibilità</a>
+        <a class="btn ghost" href="#contatti" data-i18n="footer.write">Scrivi</a>
+        <a class="btn primary" href="#prenota" data-i18n="footer.availability">Verifica disponibilità</a>
       </div>
     </div>
   </div>
 
+  <!-- BOOKING TOOL (Smoobu) -->
+  <script type="text/javascript" src="https://login.smoobu.com/js/Settings/BookingToolIframe.js"></script>
   <script>
+    BookingToolIframe.initialize({
+      url: "https://login.smoobu.com/en/booking-tool/iframe/1147778/2582848?newTabAfterSearch=true",
+      baseUrl: "https://login.smoobu.com",
+      target: "#apartmentIframe2582848"
+    });
+  </script>
+
+  <script src="https://unpkg.com/i18next@23/i18next.min.js"></script>
+  <script>
+    // --- i18n dictionaries (inline) ---
+    // Se preferisci JSON esterni /i18n/*.json, te lo adatto subito: qui è tutto in 1 file.
+    const I18N = {
+      it: {
+        "lang.label": "Lingua",
+        "nav.services": "Servizi",
+        "nav.photos": "Foto",
+        "nav.location": "Posizione",
+        "nav.contact": "Contatti",
+        "nav.book": "Prenota",
+
+        "hero.title": "Loft moderno a Milano",
+        "hero.subtitle": "zona Paolo Sarpi",
+        "hero.lead": "Un rifugio curato e funzionale in Chinatown: perfetto per soggiorni business o leisure, e comodissimo per eventi in città.",
+        "hero.note": "Prenotazione diretta dal sito ufficiale.",
+
+        "cta.availability": "Verifica disponibilità",
+        "cta.contact": "Scrivici",
+
+        "services.title": "Servizi",
+        "services.lead": "Essenziale, pulito, comodo. Tutto quello che serve per vivere Milano bene.",
+        "services.wifiStrong": "Wi-Fi",
+        "services.wifi": "veloce",
+        "services.kitchenStrong": "Cucina",
+        "services.kitchen": "attrezzata",
+        "services.linenStrong": "Biancheria",
+        "services.linen": "e asciugamani inclusi",
+        "services.selfcheckStrong": "Self check-in",
+        "services.selfcheck": "(quando disponibile)",
+        "services.areaStrong": "Zona servita",
+        "services.area": "ristoranti, market e servizi in Paolo Sarpi",
+        "services.eventsStrong": "Ideale per eventi",
+        "services.events": "e soggiorni business/leisure",
+
+        "rules.title": "Regole essenziali",
+        "rules.noParties": "Niente feste / eventi",
+        "rules.neighbors": "Rispetto del vicinato",
+        "rules.capacity": "Orari e capienza come da prenotazione",
+
+        "photos.title": "Foto",
+        "photos.lead": "Clicca su una foto per ingrandire e navigare.",
+
+        "location.title": "Posizione",
+        "location.text": "Milano — zona Paolo Sarpi (Chinatown). L’indirizzo completo e le istruzioni di check-in vengono condivisi dopo la conferma.",
+        "location.hint": "(In futuro puoi inserire qui un link a Google Maps o un embed.)",
+
+        "host.title": "Chi vi accoglie",
+        "host.text": "Siamo una coppia milanese di mezza età, legata a questa città e al suo modo discreto di accogliere.\n\nDa alcuni anni ci prendiamo cura personalmente di Casa dei Narcisi, un piccolo loft nel quartiere Chinatown, ristrutturato con attenzione ai dettagli e al comfort quotidiano.\n\nCrediamo in un’ospitalità semplice e autentica: essere presenti quando serve, lasciare spazio quando non serve, e far sentire ogni ospite a proprio agio, come a casa propria.",
+
+        "contact.title": "Contatti",
+        "contact.lead": "Scrivici un messaggio: ti rispondiamo appena possibile.",
+        "contact.name": "Nome",
+        "contact.email": "Email",
+        "contact.subject": "Oggetto (es. Richiesta info)",
+        "contact.message": "Messaggio",
+        "contact.send": "Invia messaggio",
+        "contact.hint": "Non pubblichiamo l’email: il messaggio viene inviato in modo riservato.",
+        "contact.sending": "Invio in corso…",
+        "contact.ok": "Messaggio inviato correttamente. Ti rispondiamo appena possibile.",
+        "contact.err": "Non siamo riusciti a inviare il messaggio. Riprova tra poco.",
+
+        "booking.title": "Prenota ora",
+        "booking.lead": "Seleziona date e ospiti. I risultati si aprono in una nuova scheda.",
+        "booking.note": "Prezzi e disponibilità aggiornati in tempo reale.",
+
+        "footer.contact": "Contatti",
+        "footer.book": "Prenota",
+        "footer.write": "Scrivi",
+        "footer.availability": "Verifica disponibilità"
+      },
+
+      en: {
+        "lang.label": "Language",
+        "nav.services": "Services",
+        "nav.photos": "Photos",
+        "nav.location": "Location",
+        "nav.contact": "Contact",
+        "nav.book": "Book",
+
+        "hero.title": "Modern loft in Milan",
+        "hero.subtitle": "Paolo Sarpi area",
+        "hero.lead": "A well-kept and functional retreat in Chinatown: ideal for business or leisure stays, and convenient for city events.",
+        "hero.note": "Direct booking from the official website.",
+
+        "cta.availability": "Check availability",
+        "cta.contact": "Contact us",
+
+        "services.title": "Services",
+        "services.lead": "Essential, clean, comfortable — everything you need to enjoy Milan.",
+        "services.wifiStrong": "Wi-Fi",
+        "services.wifi": "fast",
+        "services.kitchenStrong": "Kitchen",
+        "services.kitchen": "fully equipped",
+        "services.linenStrong": "Linens",
+        "services.linen": "and towels included",
+        "services.selfcheckStrong": "Self check-in",
+        "services.selfcheck": "(when available)",
+        "services.areaStrong": "Great area",
+        "services.area": "restaurants, shops and services along Paolo Sarpi",
+        "services.eventsStrong": "Great for events",
+        "services.events": "and business/leisure stays",
+
+        "rules.title": "House rules",
+        "rules.noParties": "No parties / events",
+        "rules.neighbors": "Respect the neighbors",
+        "rules.capacity": "Times and occupancy as booked",
+
+        "photos.title": "Photos",
+        "photos.lead": "Click a photo to enlarge and navigate.",
+
+        "location.title": "Location",
+        "location.text": "Milan — Paolo Sarpi (Chinatown). Full address and check-in instructions are shared after confirmation.",
+        "location.hint": "(You can add a Google Maps link or embed later.)",
+
+        "host.title": "Your hosts",
+        "host.text": "We are a middle-aged Milanese couple, deeply connected to this city and its discreet way of welcoming guests.\n\nFor several years we have personally taken care of Casa dei Narcisi, a small loft in the Chinatown district, renovated with great attention to everyday comfort.\n\nWe believe in simple and genuine hospitality: being there when needed, stepping back when not, and making every guest feel at home.",
+
+        "contact.title": "Contact",
+        "contact.lead": "Send us a message — we’ll get back to you as soon as possible.",
+        "contact.name": "Name",
+        "contact.email": "Email",
+        "contact.subject": "Subject (e.g. Availability)",
+        "contact.message": "Message",
+        "contact.send": "Send message",
+        "contact.hint": "We don’t publish our email — messages are sent privately.",
+        "contact.sending": "Sending…",
+        "contact.ok": "Message sent. We’ll get back to you soon.",
+        "contact.err": "We couldn’t send your message. Please try again later.",
+
+        "booking.title": "Book now",
+        "booking.lead": "Choose dates and guests. Results open in a new tab.",
+        "booking.note": "Real-time prices and availability.",
+
+        "footer.contact": "Contact",
+        "footer.book": "Book",
+        "footer.write": "Write",
+        "footer.availability": "Check availability"
+      }
+    };
+
     // Year
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    // Contact form (mailto)
-    document.getElementById("contactForm").addEventListener("submit", function(e){
-      e.preventDefault();
-      const to = document.getElementById("toEmail").value.trim();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const subject = document.getElementById("subject").value.trim();
-      const message = document.getElementById("message").value.trim();
+    // --- i18n init ---
+    const allowed = ["it","en","fr","de","es"];
 
-      const body = [
-        `Nome: ${name}`,
-        `Email: ${email}`,
-        ``,
-        message
-      ].join("\n");
+    function getLang() {
+      const saved = localStorage.getItem("lang");
+      if (saved && allowed.includes(saved)) return saved;
+      const nav = (navigator.language || "it").slice(0,2).toLowerCase();
+      return allowed.includes(nav) ? nav : "it";
+    }
 
-      const url = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = url;
+    async function initI18n(lng) {
+      // Fallback: if we don't have dict for the language yet, fall back to EN/IT
+      const resources = {
+        it: { translation: I18N.it },
+        en: { translation: I18N.en }
+      };
+
+      // quick fallback for fr/de/es -> en (for now)
+      if (!resources[lng]) resources[lng] = resources.en;
+
+      i18next.init({ lng, fallbackLng: "it", resources }, () => {
+        document.documentElement.lang = lng;
+
+        // text nodes
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+          el.innerHTML = i18next.t(el.dataset.i18n).replace(/\n/g, "<br>");
+        });
+
+        // placeholders
+        document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+          el.setAttribute("placeholder", i18next.t(el.dataset.i18nPlaceholder));
+        });
+      });
+    }
+
+    const langSelect = document.getElementById("langSelect");
+    const initialLang = getLang();
+    langSelect.value = initialLang;
+    initI18n(initialLang);
+
+    langSelect.addEventListener("change", () => {
+      const lng = langSelect.value;
+      localStorage.setItem("lang", lng);
+      initI18n(lng);
     });
 
-    // Lightbox gallery
+    // --- Contact form -> POST /api/contact ---
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const result = document.getElementById("contactResult");
+      result.className = "hint";
+      result.textContent = i18next.t("contact.sending");
+
+      const payload = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        subject: document.getElementById("subject").value.trim(),
+        message: document.getElementById("message").value.trim(),
+        page: location.href,
+        lang: i18next.language
+      };
+
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error("Bad response");
+
+        result.className = "hint ok";
+        result.textContent = i18next.t("contact.ok");
+        e.target.reset();
+      } catch (err) {
+        result.className = "hint err";
+        result.textContent = i18next.t("contact.err");
+      }
+    });
+
+    // --- Lightbox gallery ---
     const thumbs = Array.from(document.querySelectorAll("#gallery .thumb"));
     const lb = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");
     const lbTitle = document.getElementById("lbTitle");
-
     let idx = 0;
 
     function openLb(i){
       idx = i;
       const full = thumbs[idx].getAttribute("data-full");
-      const alt  = thumbs[idx].getAttribute("data-alt") || `Foto ${idx+1}`;
+      const alt  = thumbs[idx].getAttribute("data-alt") || `Photo ${idx+1}`;
       lbImg.src = full;
       lbImg.alt = alt;
       lbTitle.textContent = `${alt} (${idx+1}/${thumbs.length})`;
@@ -507,22 +782,14 @@
       lb.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
     }
-
     function closeLb(){
       lb.classList.remove("open");
       lb.setAttribute("aria-hidden","true");
       lbImg.src = "";
       document.body.style.overflow = "";
     }
-
-    function prev(){
-      idx = (idx - 1 + thumbs.length) % thumbs.length;
-      openLb(idx);
-    }
-    function next(){
-      idx = (idx + 1) % thumbs.length;
-      openLb(idx);
-    }
+    function prev(){ idx = (idx - 1 + thumbs.length) % thumbs.length; openLb(idx); }
+    function next(){ idx = (idx + 1) % thumbs.length; openLb(idx); }
 
     thumbs.forEach((t, i) => {
       t.addEventListener("click", () => openLb(i));
@@ -537,12 +804,8 @@
     document.getElementById("lbPrevTop").addEventListener("click", prev);
     document.getElementById("lbNextTop").addEventListener("click", next);
 
-    // close by clicking backdrop
-    lb.addEventListener("click", (e) => {
-      if(e.target === lb) closeLb();
-    });
+    lb.addEventListener("click", (e) => { if(e.target === lb) closeLb(); });
 
-    // keyboard
     document.addEventListener("keydown", (e) => {
       if(!lb.classList.contains("open")) return;
       if(e.key === "Escape") closeLb();
@@ -550,7 +813,6 @@
       if(e.key === "ArrowRight") next();
     });
 
-    // simple swipe on image area
     let touchX = null;
     const imgWrap = document.getElementById("lbImgWrap");
     imgWrap.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, {passive:true});
